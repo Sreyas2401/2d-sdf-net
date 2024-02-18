@@ -83,6 +83,10 @@ class ShapeSampler(object):
         norm = np.zeros(CANVAS_SIZE, np.uint8)
         cv2.fillPoly(norm, scaled_v[np.newaxis, :, :], SHAPE_COLOR)
         cv2.imwrite(f'{self.norm_image_path}{save_name}.png', norm)
+        normalized_image = cv2.imread(f'{self.norm_image_path}{save_name}.png')
+
+        # Display the normalized image
+        cv2.imshow('Normalized Image', normalized_image)    
         print(f'Normalized image path = {self.norm_image_path}{save_name}.png')
         mask = np.zeros(CANVAS_SIZE, np.uint8)
         cv2.polylines(mask, scaled_v[np.newaxis, :, :], True, SHAPE_COLOR, 2)

@@ -2,7 +2,7 @@ import numpy as np
 import cv2 
 import os
   
-img_path = '../shapes/raw_images/omega.png'
+img_path = '../shapes/raw_images/quarter_circle.png'
 out_path = '../shapes/raw/'
 font = cv2.FONT_HERSHEY_COMPLEX 
 img2 = cv2.imread(img_path, cv2.IMREAD_COLOR) 
@@ -41,7 +41,7 @@ for i, cnt in enumerate(contours):
 
 
 
-f = open(f'{out_path}/omega_check.txt', 'w')
+f = open(f'{out_path}/quarter_circle.txt', 'w')
 for point in pts:
     # Normalize (x,y) to (0,1)
     x = (np.double(point[0]) / width) 

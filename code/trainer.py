@@ -20,7 +20,7 @@ LOG_PATH = '../logs/'
 
 if __name__ == '__main__':
     batch_size = 64
-    learning_rate = 1e-5
+    learning_rate = 1e-5 # Play around ------> :)
     epochs = 1200
     regularization = 0  # Default: 1e-2
     delta = 0.1  # Truncated distance
@@ -65,14 +65,16 @@ if __name__ == '__main__':
             loss = loss_fn(torch.clamp(pred_sdf, min=-delta, max=delta), torch.clamp(sdf, min=-delta, max=delta))
 
             # Once epoch reaches 1000 and 1200, considering 1200 is the maxepoch, render the image.
-            if t > 1000:    # Changed this to > 1000 instead of > 500 epochs :)
+            if t > 100:    # Changed this to > 1000 instead of > 500 epochs :)
                 start_hess_track = True
                 predicted_gradient, pred_hess_matrix = getGradientAndHessian(pred_sdf, xy, matrixsize=2)
                 hessloss = implicit_loss_2d(predicted_gradient, pred_hess_matrix, device)
+                print(hessloss)
                 loss += hessloss
+            optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-            optimizer.zero_grad()
+            
 
             if batch % 50 == 0:
                 loss_value, current = loss.item(), batch * len(xy)

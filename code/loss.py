@@ -50,7 +50,7 @@ def datafidelity_testloss(predicted_sdf, gt_sdf_tensor, latent_codes, epoch, arg
     
 def implicit_loss_2d(gradient, hessian_matrix, device, matrixsize=2, index=None):
     hess_regularizer = torch.tensor(0).to(device)
-    sdfloss = torch.tensor(0).to(device)
+    #sdfloss = torch.tensor(0).to(device)
     SVD = torch.tensor(0)
     n = gradient.shape[0]
 
@@ -61,7 +61,8 @@ def implicit_loss_2d(gradient, hessian_matrix, device, matrixsize=2, index=None)
     #hatHMatrix = hatHMatrix.to(device)
 
     U,SVD,V = torch.linalg.svd(hessian_matrix)
-    hess_regularizer = 1e1 * SVD[:,1:].mean()
+    hess_regularizer = 1e7 * SVD[:,1:].mean() # Increase to high value ------>
+    print("hess_regularizer" + hess_regularizer)
     return hess_regularizer
     
 def implicit_loss(gradient, hessian_matrix, args, device, matrixsize=3, index=None):
